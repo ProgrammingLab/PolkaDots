@@ -24,11 +24,15 @@ class OverlapEvaluation:
         self.width = picture_data.width
         self.height = picture_data.height
         self.overlap = [[0 for col in range(self.width)] for row in range(self.height)]
-        self.drawOverlap(circles)
+        self.setOverlap(circles)
+        s = ""
         for line in self.overlap:
             for pixel in line:
-                self.score -= (pixel-1)
-
+                s += str(pixel) + " "
+                if pixel>1:
+                    self.score -= (pixel-1)
+            s += "\n"
+        print(s)
         return self.score
 
     def setOverlap(self, circles):
@@ -36,12 +40,14 @@ class OverlapEvaluation:
             self.drawCircle(circle)
 
     def drawCircle(self, circle):
-        left = self.width - circle.radius
-        right = self.width + circle.radius
-        for x in range(left, right):
+        left = circle.x - circle.radius
+        right = circle.y + circle.radius
+        for x in range(left, right+1):
             r = circle.radius
-            h = math.sqrt(x*x+r*r)
-            for y in range(self.height-h, self.height+h):
+            xi = circle.x - x
+            h = int(math.sqrt(r*r-xi*xi))
+            print("x %s h %s xi %s" % (x,h,xi))
+            for y in range(circle.y-h, circle.y+h+1):
                 self.dot(x,y)
 
     def dot(self, x, y):
@@ -51,14 +57,21 @@ class OverlapEvaluation:
             return
         self.overlap[y][x] += 1
 
-import Evaluation.PictureData
-import utility.Circle
 
-picture_data = Evaluation.PictureData()
-picture_data.width = 100
-picture_data.height = 100
+"""
+from PictureData import PictureData
+from Circle import Circle
+
+picture_data = PictureData()
+picture_data.width = 5
+picture_data.height = 6
 circles = list()
-circles.append(Circle())
+circles.append(Circle(2,0,0))
+circles.append(Circle(2,2,2))
+overlap = OverlapEvaluation()
+
+print(overlap.evaluate(10, circles, picture_data))
+"""
 
 
 

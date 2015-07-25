@@ -8,9 +8,6 @@ class PictureData:
         self.width = 0
         self.height = 0
 
-    def __init__(self, picture):
-        self.picture = picture
-
     def getPixel(self, x, y):
         if self.width>=x or self.width<0:
             return 0
