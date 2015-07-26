@@ -10,7 +10,7 @@ class SizeEvaluation:
     def __init__(self):
         self.score = 0
 
-    def evaluate(self, max_score, circles, picture_data):
+    def evaluate(self,circles, picture_data):
         var = float(self.variance(circles))
         return var
 

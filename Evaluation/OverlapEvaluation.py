@@ -19,8 +19,8 @@ class OverlapEvaluation:
         picture_data
             PictureData
     """
-    def evaluate(self, max_score, circles, picture_data):
-        self.score = max_score
+    def evaluate(self,circles, picture_data):
+        self.score = 10000
         self.width = picture_data.width
         self.height = picture_data.height
         self.overlap = [[0 for col in range(self.width)] for row in range(self.height)]
@@ -37,7 +37,7 @@ class OverlapEvaluation:
 
     def drawCircle(self, circle):
         left = circle.x - circle.radius
-        right = circle.y + circle.radius
+        right = circle.x + circle.radius
         for x in range(left, right+1):
             r = circle.radius
             xi = circle.x - x
