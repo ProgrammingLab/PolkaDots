@@ -27,16 +27,19 @@ class Visualizer(QWidget, Ui_Form):
 
         __width = image_item.boundingRect().width()
         __height = image_item.boundingRect().height()
-        __x = self.imageView.x()
-        __y = self.imageView.y()
-
-        self.imageView.setGeometry(QRect(__x, __y, __width, __height))
-        __main_x = max(int(__x + __width + 10), 630)
-        __main_y = int(__y + __height + 10)
-        self.resize(__main_x, __main_y)
+        self.graphicsResize(__width, __height)
 
         self.scene.addItem(image_item)
         self.imageView.setScene(self.scene)
+
+    def graphicsResize(self, width, height):
+        __x = self.imageView.x()
+        __y = self.imageView.y()
+
+        self.imageView.setGeometry(QRect(__x, __y, width, height))
+        __main_x = max(int(__x + width + 10), 630)
+        __main_y = int(__y + height + 10)
+        self.resize(__main_x, __main_y)
 
     def fileSelected(self):
         file = QFileDialog.getOpenFileName()
