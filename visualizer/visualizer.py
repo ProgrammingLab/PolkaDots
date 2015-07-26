@@ -22,8 +22,20 @@ class Visualizer(QWidget, Ui_Form):
     def drawImage(self, image):
         height, width, dim = image.shape
         image = QImage(image, width, height, dim * width, QImage.Format_RGB888)
+        image_item = QGraphicsPixmapItem(QPixmap.fromImage(image))
         self.scene = QGraphicsScene()
-        self.scene.addItem(QGraphicsPixmapItem(QPixmap.fromImage(image)))
+
+        __width = image_item.boundingRect().width()
+        __height = image_item.boundingRect().height()
+        __x = self.imageView.x()
+        __y = self.imageView.y()
+
+        self.imageView.setGeometry(QRect(__x, __y, __width, __height))
+        __main_x = max(int(__x + __width + 10), 630)
+        __main_y = int(__y + __height + 10)
+        self.resize(__main_x, __main_y)
+
+        self.scene.addItem(image_item)
         self.imageView.setScene(self.scene)
 
     def fileSelected(self):
@@ -31,18 +43,8 @@ class Visualizer(QWidget, Ui_Form):
         if file[0]:
             self.file = file[0]
             self.fileEdit.setText(self.file)
-            image_item = QGraphicsPixmapItem(QPixmap(self.file))
-            __width = image_item.boundingRect().width()
-            __height = image_item.boundingRect().height()
-            __x = self.imageView.x()
-            __y = self.imageView.y()
-
-            self.imageView.setGeometry(QRect(__x, __y, __width, __height))
-            __main_x = max(int(__x + __width + 10), 630)
-            __main_y = int(__y + __height + 10)
-            self.resize(__main_x, __main_y)
-            self.scene.addItem(image_item)
-            self.imageView.setScene(self.scene)
+            image = cv2.imread(self.file)
+            self.drawImage(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
 
 
 if __name__ == '__main__':
