@@ -6,7 +6,7 @@ import Evaluation.Evaluation
 import random
 
 class Heredity:
-    HEREDITY_NUM = 20
+    HEREDITY_NUM = 8
     MAX_RADIUS = 100
     CHANGE_NUM = 100
     MUTATION_PROLABILITY = 10
@@ -101,7 +101,7 @@ class Heredity:
     def grading(self, heredity_index):
         circles = self.children[heredity_index]
         eva = Evaluation.Evaluation.Evaluation()
-        score = eva.evaluate(100, circles, self.picture_data)
+        score = eva.evaluate(circles, self.picture_data)
         self.scores[heredity_index] = score
 
     #親を見つける
