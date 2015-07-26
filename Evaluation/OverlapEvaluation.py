@@ -37,7 +37,7 @@ class OverlapEvaluation:
 
     def drawCircle(self, circle):
         left = circle.x - circle.radius
-        right = circle.y + circle.radius
+        right = circle.x + circle.radius
         for x in range(left, right+1):
             r = circle.radius
             xi = circle.x - x
